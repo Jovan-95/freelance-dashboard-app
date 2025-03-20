@@ -64,72 +64,76 @@ export default function Register() {
   }
 
   return (
-    <>
-      <Navigation />
-      <form>
-        <h1>Register </h1>
-        <div>
-          <label htmlFor="name">Full Name:</label>
-          <input
-            onChange={(e) => setUserObj({ ...userObj, name: e.target.value })}
-            value={userObj.name}
-            type="text"
-            id="name"
-            name="name"
-            required
-          />
-        </div>
+    <div className="auth-wrapper">
+      {/* <Navigation /> */}
+      <div className="form-wrapper">
+        <form>
+          <h1>Register </h1>
+          <div className="input-wrapper">
+            <label htmlFor="name">Full Name:</label>
+            <input
+              onChange={(e) => setUserObj({ ...userObj, name: e.target.value })}
+              value={userObj.name}
+              type="text"
+              id="name"
+              name="name"
+              required
+            />
+          </div>
 
-        <div>
-          <label htmlFor="email">Email:</label>
-          <input
-            onChange={(e) => setUserObj({ ...userObj, email: e.target.value })}
-            value={userObj.email}
-            type="email"
-            id="email"
-            name="email"
-            required
-          />
-        </div>
+          <div className="input-wrapper">
+            <label htmlFor="email">Email:</label>
+            <input
+              onChange={(e) =>
+                setUserObj({ ...userObj, email: e.target.value })
+              }
+              value={userObj.email}
+              type="email"
+              id="email"
+              name="email"
+              required
+            />
+          </div>
 
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input
-            onChange={(e) =>
-              setUserObj({ ...userObj, password: e.target.value })
-            }
-            value={userObj.password}
-            type="password"
-            id="password"
-            name="password"
-            required
-          />
-        </div>
+          <div className="input-wrapper">
+            <label htmlFor="password">Password:</label>
+            <input
+              onChange={(e) =>
+                setUserObj({ ...userObj, password: e.target.value })
+              }
+              value={userObj.password}
+              type="password"
+              id="password"
+              name="password"
+              required
+            />
+          </div>
 
-        <div>
-          <label htmlFor="confirmPassword">Confirm Password:</label>
-          <input
-            onChange={(e) =>
-              setUserObj({ ...userObj, confirmPassword: e.target.value })
-            }
-            value={userObj.confirmPassword}
-            type="password"
-            id="confirmPassword"
-            name="confirmPassword"
-            required
-          />
-        </div>
+          <div className="input-wrapper">
+            <label htmlFor="confirmPassword">Confirm Password:</label>
+            <input
+              onChange={(e) =>
+                setUserObj({ ...userObj, confirmPassword: e.target.value })
+              }
+              value={userObj.confirmPassword}
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              required
+            />
+          </div>
 
-        <button onClick={handleRegisterUser} type="submit">
-          Register
-        </button>
-        <p>
-          Already have an account?{" "}
-          <span style={{ cursor: "pointer" }} onClick={goToLogin}>
-            Login here!
-          </span>
-        </p>
-      </form>
-    </>
+          <button onClick={handleRegisterUser} type="submit">
+            Register
+          </button>
+          <p>
+            Already have an account?{" "}
+            <span style={{ cursor: "pointer" }} onClick={goToLogin}>
+              Login here!
+            </span>
+          </p>
+        </form>
+      </div>
+    </div>
   );
 }

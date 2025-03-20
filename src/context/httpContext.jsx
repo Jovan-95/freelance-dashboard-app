@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useReducer } from "react";
+import React, { act, createContext, useReducer } from "react";
 
 // Endpoints:
 // http://localhost:5000/clients
@@ -26,26 +26,33 @@ export const HttpContextProvider = ({ children }) => {
         return { ...state, invoices: action.payload };
       case "SET_PAYMENTS":
         return { ...state, payments: action.payload };
+      case "DELETE_CLIENT":
+        return {
+          ...state,
+          clients: state.clients.filter(
+            (client) => client.id !== action.payload
+          ),
+        };
       default:
         return state;
     }
   }
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  // Get clients
+  // Get clients, HTTP req
   async function getClients() {
     try {
       const res = await fetch("http://localhost:5000/clients");
       if (!res.ok) throw new Error(`${res.status}, ${res.statusText}`);
       const data = await res.json();
-      console.log("Clients:", data);
+      // console.log("Clients:", data);
       dispatch({ type: "SET_CLIENTS", payload: data });
     } catch (err) {
       console.log(err);
     }
   }
 
-  // Get projects
+  // Get projects, HTTP req
   async function getProjects() {
     try {
       const res = await fetch("http://localhost:5000/projects");
@@ -59,7 +66,7 @@ export const HttpContextProvider = ({ children }) => {
     }
   }
 
-  // Get invoices
+  // Get invoices, HTTP req
   async function getInvoices() {
     try {
       const res = await fetch("http://localhost:5000/invoices");
@@ -73,7 +80,7 @@ export const HttpContextProvider = ({ children }) => {
     }
   }
 
-  // Get payments
+  // Get payments, HTTP req
   async function getPayments() {
     try {
       const res = await fetch("http://localhost:5000/payments");
@@ -87,13 +94,32 @@ export const HttpContextProvider = ({ children }) => {
     }
   }
 
-  // Call all HTTP req onLoad
-  useEffect(() => {
-    getClients();
-    getProjects();
-    getInvoices();
-    getPayments();
-  }, []);
+  // We call this inside the page because of app optimization
+  // useEffect(() => {
+  //   getClients();
+  //   getProjects();
+  //   getInvoices();
+  //   getPayments();
+  // }, []);
+
+  // Delete (client) HTTP req
+  async function deleteClient(clientID) {
+    try {
+      const res = await fetch(`http://localhost:5000/clients/${clientID}`, {
+        method: "DELETE",
+      });
+      if (!res.ok) {
+        throw new Error(`${res.status}, ${res.statusText}`);
+      }
+      // const data = await res.json();
+
+      dispatch({ type: "DELETE_CLIENT", payload: clientID });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  //
 
   return (
     <HttpContext.Provider
@@ -104,6 +130,7 @@ export const HttpContextProvider = ({ children }) => {
         getProjects,
         getInvoices,
         getPayments,
+        deleteClient,
       }}
     >
       {children}

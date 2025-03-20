@@ -46,37 +46,38 @@ function Login() {
   }
   return (
     <>
-      <Navigation />
-      <div className="login-form-wrapper">
-        <h2>LOGIN</h2>
+      <div className="auth-wrapper">
+        <div className="form-wrapper">
+          <h2>LOGIN</h2>
 
-        <div>
-          <label>Name:</label>
-          <input
-            onChange={(e) => setLoginObj({ name: e.target.value })}
-            value={loginObj.name}
-            type="text"
-          />
+          <div className="input-wrapper">
+            <label>Name:</label>
+            <input
+              onChange={(e) => setLoginObj({ name: e.target.value })}
+              value={loginObj.name}
+              type="text"
+            />
+          </div>
+          <div className="input-wrapper">
+            <label>Password:</label>
+            <input
+              onChange={(e) =>
+                setLoginObj({ ...loginObj, password: e.target.value })
+              }
+              value={loginObj.password}
+              type="text"
+            />
+          </div>
+          <div className="input-wrapper">
+            <button onClick={handleLogin}>LOGIN</button>
+          </div>
+          <p>
+            Dont have an account?
+            <span style={{ cursor: "pointer" }} onClick={goToRegister}>
+              Register here!
+            </span>
+          </p>
         </div>
-        <div>
-          <label>Password:</label>
-          <input
-            onChange={(e) =>
-              setLoginObj({ ...loginObj, password: e.target.value })
-            }
-            value={loginObj.password}
-            type="text"
-          />
-        </div>
-        <div>
-          <button onClick={handleLogin}>LOGIN</button>
-        </div>
-        <p>
-          Dont have an account?
-          <span style={{ cursor: "pointer" }} onClick={goToRegister}>
-            Register here!
-          </span>
-        </p>
       </div>
     </>
   );
