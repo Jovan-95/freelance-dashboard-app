@@ -179,6 +179,13 @@ h2 {
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.text-info {
+  padding: 8px;
+  font-size: 18px;
+  color: black;
+  font-weight: 600;
+}
+
 /*MODAL CSS*/
 
 .modal {
@@ -197,7 +204,7 @@ h2 {
 .modal-content {
   width: 450px !important;
   border-radius: 8px;
-  text-align: center;
+  /* text-align: center; */
   background-color: #fefefe !important;
   margin: 15% auto; /* 15% from the top and centered */
   padding: 20px;

@@ -33,6 +33,15 @@ export const HttpContextProvider = ({ children }) => {
             (client) => client.id !== action.payload
           ),
         };
+      case "ADD_CLIENT":
+        return { ...state, clients: [...state.clients, action.payload] };
+      case "EDIT_CLIENT":
+        return {
+          ...state,
+          clients: state.clients.map((client) =>
+            client.id === action.payload.id ? action.payload : client
+          ),
+        };
       default:
         return state;
     }
@@ -119,8 +128,44 @@ export const HttpContextProvider = ({ children }) => {
     }
   }
 
-  //
+  // Add client, HTTP req (POST)
+  async function addClient(newClient) {
+    try {
+      const res = await fetch("http://localhost:5000/clients", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newClient),
+      });
+      if (!res.ok) throw new Error(`${res.status}, ${res.statusText}`);
+      const data = await res.json();
+      // console.log(data);
+      dispatch({ type: "ADD_CLIENT", payload: newClient });
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
+  // Edit client, HTTP req (PUT)
+  async function editClient(client) {
+    try {
+      const res = await fetch(`http://localhost:5000/clients/${client.id}`, {
+        method: "PUT", // HTTP method for updating data
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(client),
+      });
+
+      if (!res.ok) throw new Error(`${res.status}, ${res.statusText}`);
+      const data = await res.json();
+      console.log("Updated User:", data);
+      dispatch({ type: "EDIT_CLIENT", payload: client });
+    } catch (err) {
+      console.log(err);
+    }
+  }
   return (
     <HttpContext.Provider
       value={{
@@ -131,6 +176,8 @@ export const HttpContextProvider = ({ children }) => {
         getInvoices,
         getPayments,
         deleteClient,
+        addClient,
+        editClient,
       }}
     >
       {children}
