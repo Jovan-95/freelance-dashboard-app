@@ -8,6 +8,7 @@ import { HttpContextProvider } from "./context/httpContext.jsx";
 const Register = lazy(() => import("./pages/register.jsx"));
 const Login = lazy(() => import("./pages/login.jsx"));
 const Dashboard = lazy(() => import("./pages/dashboard.jsx"));
+const Projects = lazy(() => import("./pages/projects.jsx"));
 
 function App() {
   return (
@@ -23,6 +24,14 @@ function App() {
                 element={
                   <PrivateRoute>
                     <Dashboard />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/projects"
+                element={
+                  <PrivateRoute>
+                    <Projects />
                   </PrivateRoute>
                 }
               />

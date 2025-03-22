@@ -42,6 +42,15 @@ export const HttpContextProvider = ({ children }) => {
             client.id === action.payload.id ? action.payload : client
           ),
         };
+      case "DELETE_PROJECT":
+        return {
+          ...state,
+          projects: state.projects.filter(
+            (project) => project.id !== action.payload
+          ),
+        };
+      case "ADD_PROJECT":
+        return { ...state, projects: [...state.projects, action.payload] };
       default:
         return state;
     }
@@ -160,12 +169,53 @@ export const HttpContextProvider = ({ children }) => {
 
       if (!res.ok) throw new Error(`${res.status}, ${res.statusText}`);
       const data = await res.json();
-      console.log("Updated User:", data);
+      // console.log("Updated User:", data);
       dispatch({ type: "EDIT_CLIENT", payload: client });
     } catch (err) {
       console.log(err);
     }
   }
+
+  //// Projects
+
+  // Delete project, HTTP req (DELETE)
+  async function deleteProject(projectID) {
+    try {
+      const res = await fetch(`http://localhost:5000/projects/${projectID}`, {
+        method: "DELETE",
+      });
+      if (!res.ok) {
+        throw new Error(`${res.status}, ${res.statusText}`);
+      }
+      // const data = await res.json();
+
+      dispatch({ type: "DELETE_PROJECT", payload: projectID });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  // Add project, HTTP req (POST)
+  async function addProject(newProject) {
+    try {
+      const res = await fetch("http://localhost:5000/projects", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newProject),
+      });
+      if (!res.ok) throw new Error(`${res.status}, ${res.statusText}`);
+      const data = await res.json();
+      // console.log(data);
+      dispatch({ type: "ADD_PROJECT", payload: newProject });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  // Edit project, HTTP req (PUT)
+
   return (
     <HttpContext.Provider
       value={{
@@ -178,6 +228,8 @@ export const HttpContextProvider = ({ children }) => {
         deleteClient,
         addClient,
         editClient,
+        addProject,
+        deleteProject,
       }}
     >
       {children}

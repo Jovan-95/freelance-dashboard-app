@@ -9,6 +9,9 @@ function Navigation() {
             <NavLink to="/dashboard">Dashboard</NavLink>
           </li>
           <li>
+            <NavLink to="/projects">Projects</NavLink>
+          </li>
+          <li>
             <NavLink to="/">Register</NavLink>
           </li>
           <li>

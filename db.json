@@ -17,18 +17,6 @@
       "name": "Alice Johnson",
       "email": "alice@example.com",
       "company": "Johnson Marketing"
-    },
-    {
-      "id": "7e46",
-      "name": "adwad",
-      "email": "awdawawd",
-      "company": "awdaw"
-    },
-    {
-      "id": "1742563803826",
-      "name": "www",
-      "email": "www",
-      "company": "www"
     }
   ],
   "projects": [
@@ -45,13 +33,6 @@
       "clientId": 2,
       "status": "pending",
       "budget": 3000
-    },
-    {
-      "id": "3",
-      "name": "SEO Optimization",
-      "clientId": 3,
-      "status": "completed",
-      "budget": 2000
     }
   ],
   "invoices": [

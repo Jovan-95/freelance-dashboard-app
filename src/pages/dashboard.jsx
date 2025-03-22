@@ -6,20 +6,27 @@ import Modal from "../components/Modal";
 function Dashboard() {
   const [openAddClientModal, setIsAddClientModal] = useState(false);
   const [openEditClientModal, setIsOpenEditClientModal] = useState(false);
+
+  // Search
+  const [searchTerm, setSearchTerm] = useState("");
+
   const [newClientObj, setNewClientObj] = useState({
     name: "",
     email: "",
     company: "",
+    phone: "",
+    notes: "",
   });
 
   const [editedClient, setEditedClient] = useState({
     name: "",
     email: "",
     company: "",
+    phone: "",
+    notes: "",
   });
 
   const {
-    dispatch,
     state,
     getClients,
     getProjects,
@@ -84,7 +91,7 @@ function Dashboard() {
   // Edit client modal open
   function handleEditClientModal(client) {
     setEditedClient(client);
-    setIsOpenEditClientModal(true);
+    setIsOpenEditClientModal((prev) => !prev);
     console.log("Edit", editedClient);
   }
 
@@ -99,9 +106,16 @@ function Dashboard() {
       editClient(prevState);
       return prevState;
     });
+    setIsOpenEditClientModal(false);
   }
+
+  // Filter existing clients by search name
+  const searchClients = state.clients.filter((client) =>
+    client.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
-    <div className="dashboard-wrapper">
+    <div className="wrapper">
       <h1>Dashboard </h1>
       <Navigation />
       <div className="card-wrapper">
@@ -110,11 +124,19 @@ function Dashboard() {
             ADD CLIENT
           </button>
           <h2>Clients:</h2>
-          {state.clients.map((client) => (
+          <input
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value.toLowerCase())}
+            type="text"
+            placeholder="Search clients by name"
+          />
+          {searchClients.map((client) => (
             <div key={client.id}>
               <div className="text-info">NAME:{client.name}</div>
               <div className="text-info">EMAIL:{client.email}</div>
               <div className="text-info">COMPANY:{client.company}</div>
+              <div className="text-info">PHONE:{client.phone}</div>
+              <div className="text-info">NOTES:{client.notes}</div>
               <button onClick={() => handleClientRemoving(client)}>
                 Remove client
               </button>
@@ -124,70 +146,14 @@ function Dashboard() {
               >
                 Edit client
               </button>
-              <div className={openEditClientModal ? "d-block" : "d-none"}>
-                <Modal>
-                  <span
-                    onClick={handleEditClientModalClosing}
-                    className="close"
-                  >
-                    {" "}
-                    &times;
-                  </span>
-                  <div>
-                    <h3>Edit client</h3>
-                    <div>
-                      <label>Name:</label>
-                      <input
-                        onChange={(e) =>
-                          setEditedClient({
-                            ...editedClient,
-                            name: e.target.value,
-                          })
-                        }
-                        value={editedClient.name}
-                        type="text"
-                      />
-                    </div>
-                    <div>
-                      <label>Email:</label>
-                      <input
-                        onChange={(e) =>
-                          setEditedClient({
-                            ...editedClient,
-                            email: e.target.value,
-                          })
-                        }
-                        value={editedClient.email}
-                        type="text"
-                      />
-                    </div>
-                    <div>
-                      <label>Company:</label>
-                      <input
-                        onChange={(e) =>
-                          setEditedClient({
-                            ...editedClient,
-                            company: e.target.value,
-                          })
-                        }
-                        value={editedClient.company}
-                        type="text"
-                      />
-                    </div>
-                    <div style={{ marginTop: "8px" }}>
-                      <button onClick={handleEditingClient}>
-                        Save changes
-                      </button>
-                    </div>
-                  </div>
-                </Modal>
-              </div>
             </div>
           ))}
 
           <div className="text-info">
             Total number of clients: {state.clients.length}
           </div>
+
+          {/* ADD CLIENT MODAL */}
           <div className={openAddClientModal ? "d-block" : "d-none"}>
             <Modal>
               <span onClick={handleClosingAddClientModal} className="close">
@@ -232,8 +198,113 @@ function Dashboard() {
                     type="text"
                   />
                 </div>
+                <div>
+                  <label>Phone:</label>
+                  <input
+                    onChange={(e) =>
+                      setNewClientObj({
+                        ...newClientObj,
+                        phone: Number(e.target.value),
+                      })
+                    }
+                    value={newClientObj.phone}
+                    type="number"
+                  />
+                </div>
+                <div>
+                  <label>Notes:</label>
+                  <textarea
+                    onChange={(e) =>
+                      setNewClientObj({
+                        ...newClientObj,
+                        notes: e.target.value,
+                      })
+                    }
+                    value={newClientObj.notes}
+                  />
+                </div>
                 <div style={{ marginTop: "16px" }}>
                   <button onClick={handleAddClient}>ADD CLIENT</button>
+                </div>
+              </div>
+            </Modal>
+          </div>
+
+          {/* EDIT MODAL */}
+          <div className={openEditClientModal ? "d-block" : "d-none"}>
+            <Modal>
+              <span onClick={handleEditClientModalClosing} className="close">
+                {" "}
+                &times;
+              </span>
+              <div>
+                <h3>Edit client</h3>
+                <div>
+                  <label>Name:</label>
+                  <input
+                    onChange={(e) =>
+                      setEditedClient({
+                        ...editedClient,
+                        name: e.target.value,
+                      })
+                    }
+                    value={editedClient.name}
+                    type="text"
+                  />
+                </div>
+                <div>
+                  <label>Email:</label>
+                  <input
+                    onChange={(e) =>
+                      setEditedClient({
+                        ...editedClient,
+                        email: e.target.value,
+                      })
+                    }
+                    value={editedClient.email}
+                    type="text"
+                  />
+                </div>
+                <div>
+                  <label>Company:</label>
+                  <input
+                    onChange={(e) =>
+                      setEditedClient({
+                        ...editedClient,
+                        company: e.target.value,
+                      })
+                    }
+                    value={editedClient.company}
+                    type="text"
+                  />
+                </div>
+                <div>
+                  <label>Phone:</label>
+                  <input
+                    onChange={(e) =>
+                      setEditedClient({
+                        ...editedClient,
+                        phone: Number(e.target.value),
+                      })
+                    }
+                    value={editedClient.phone}
+                    type="number"
+                  />
+                </div>
+                <div>
+                  <label>Notes:</label>
+                  <textarea
+                    onChange={(e) =>
+                      setEditedClient({
+                        ...editedClient,
+                        notes: e.target.value,
+                      })
+                    }
+                    value={editedClient.notes}
+                  />
+                </div>
+                <div style={{ marginTop: "8px" }}>
+                  <button onClick={handleEditingClient}>Save changes</button>
                 </div>
               </div>
             </Modal>
