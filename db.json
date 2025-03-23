@@ -28,11 +28,34 @@
       "budget": 5000
     },
     {
-      "id": "2",
-      "name": "Mobile App Design",
-      "clientId": 2,
+      "id": "738c",
+      "name": "wdadawdaaaaaaaaaaaaaaaaaaaa",
+      "description": "awdaw",
+      "client": "Alice Johnson",
+      "startDate": "2025-03-24",
+      "deadline": "2025-03-30",
+      "status": "completed",
+      "budget": 222
+    },
+    {
+      "id": "a84f",
+      "name": "adadaw",
+      "description": "dawdawd",
+      "client": "Jane Smith",
+      "startDate": "2025-03-22",
+      "deadline": "2025-03-30",
+      "status": "completed",
+      "budget": 22
+    },
+    {
+      "id": "b2c0",
+      "name": "awdawd",
+      "description": "adawd",
+      "client": "Alice Johnson",
+      "startDate": "2025-03-29",
+      "deadline": "2025-03-30",
       "status": "pending",
-      "budget": 3000
+      "budget": 213123
     }
   ],
   "invoices": [

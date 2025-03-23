@@ -1,4 +1,4 @@
-import React, { act, createContext, useReducer } from "react";
+import React, { createContext, useReducer } from "react";
 
 // Endpoints:
 // http://localhost:5000/clients
@@ -51,6 +51,13 @@ export const HttpContextProvider = ({ children }) => {
         };
       case "ADD_PROJECT":
         return { ...state, projects: [...state.projects, action.payload] };
+      case "EDIT_PROJECT":
+        return {
+          ...state,
+          projects: state.projects.map((project) =>
+            project.id === action.payload.id ? action.payload : project
+          ),
+        };
       default:
         return state;
     }
@@ -215,6 +222,24 @@ export const HttpContextProvider = ({ children }) => {
   }
 
   // Edit project, HTTP req (PUT)
+  async function editProject(project) {
+    try {
+      const res = await fetch(`http://localhost:5000/projects/${project.id}`, {
+        method: "PUT", // HTTP method for updating data
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(project),
+      });
+
+      if (!res.ok) throw new Error(`${res.status}, ${res.statusText}`);
+      const data = await res.json();
+      // console.log("Updated User:", data);
+      dispatch({ type: "EDIT_PROJECT", payload: project });
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   return (
     <HttpContext.Provider
@@ -230,6 +255,7 @@ export const HttpContextProvider = ({ children }) => {
         editClient,
         addProject,
         deleteProject,
+        editProject,
       }}
     >
       {children}
