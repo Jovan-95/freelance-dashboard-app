@@ -58,6 +58,22 @@ export const HttpContextProvider = ({ children }) => {
             project.id === action.payload.id ? action.payload : project
           ),
         };
+      case "DELETE_INVOICE":
+        return {
+          ...state,
+          invoices: state.invoices.filter(
+            (invoice) => invoice.id !== action.payload
+          ),
+        };
+      case "ADD_INVOICE":
+        return { ...state, invoices: [...state.invoices, action.payload] };
+      case "EDIT_INVOICE":
+        return {
+          ...state,
+          invoices: state.invoices.map((invoice) =>
+            invoice.id === action.payload.id ? action.payload : invoice
+          ),
+        };
       default:
         return state;
     }
@@ -241,6 +257,62 @@ export const HttpContextProvider = ({ children }) => {
     }
   }
 
+  //// Invoices
+  // Delete invoice, HTTP req (DELETE)
+  async function deleteInvoice(invoiceID) {
+    try {
+      const res = await fetch(`http://localhost:5000/invoices/${invoiceID}`, {
+        method: "DELETE",
+      });
+      if (!res.ok) {
+        throw new Error(`${res.status}, ${res.statusText}`);
+      }
+      // const data = await res.json();
+
+      dispatch({ type: "DELETE_INVOICE", payload: invoiceID });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  // Add Invoice, HTTP req (POST)
+  async function addInvoice(newInvoice) {
+    try {
+      const res = await fetch("http://localhost:5000/invoices", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newInvoice),
+      });
+      if (!res.ok) throw new Error(`${res.status}, ${res.statusText}`);
+      const data = await res.json();
+      // console.log(data);
+      dispatch({ type: "ADD_INVOICE", payload: newInvoice });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  // Edit invoice, HTTP req (PUT)
+  async function editInvoice(invoice) {
+    try {
+      const res = await fetch(`http://localhost:5000/invoices/${invoice.id}`, {
+        method: "PUT", // HTTP method for updating data
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(invoice),
+      });
+
+      if (!res.ok) throw new Error(`${res.status}, ${res.statusText}`);
+      const data = await res.json();
+      // console.log("Updated User:", data);
+      dispatch({ type: "EDIT_INVOICE", payload: invoice });
+    } catch (err) {
+      console.log(err);
+    }
+  }
   return (
     <HttpContext.Provider
       value={{
@@ -256,6 +328,9 @@ export const HttpContextProvider = ({ children }) => {
         addProject,
         deleteProject,
         editProject,
+        addInvoice,
+        deleteInvoice,
+        editInvoice,
       }}
     >
       {children}

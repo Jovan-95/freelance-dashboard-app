@@ -124,7 +124,15 @@ function Projects() {
             filteredProjects.map((project) => (
               <div key={project.id}>
                 <div className="text-info">NAME: {project.name}</div>
+                <div className="text-info">
+                  DESCRIPTION: {project.description}
+                </div>
+
                 <div className="text-info">STATUS: {project.status}</div>
+                <div className="text-info">CLIENT: {project.client}$</div>
+                <div className="text-info">STARTDATE: {project.startDate}$</div>
+                <div className="text-info">DEADLINE: {project.deadline}$</div>
+
                 <div className="text-info">BUDGET: {project.budget}$</div>
                 <button onClick={() => handleProjectEditModal(project)}>
                   Edit this project?

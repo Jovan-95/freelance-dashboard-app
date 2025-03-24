@@ -17,6 +17,14 @@
       "name": "Alice Johnson",
       "email": "alice@example.com",
       "company": "Johnson Marketing"
+    },
+    {
+      "id": 1742812962508,
+      "name": "Cody MIler",
+      "email": "miler@gmail.com",
+      "company": "CZV",
+      "phone": 1111111,
+      "notes": "Pointguard"
     }
   ],
   "projects": [
@@ -60,19 +68,11 @@
   ],
   "invoices": [
     {
-      "id": "1",
-      "projectId": 1,
-      "clientId": 1,
-      "amount": 5000,
-      "status": "paid",
-      "dueDate": "2025-03-20"
-    },
-    {
       "id": "2",
       "projectId": 2,
       "clientId": 2,
       "amount": 3000,
-      "status": "pending",
+      "status": "unpaid",
       "dueDate": "2025-03-25"
     },
     {
@@ -80,8 +80,16 @@
       "projectId": 3,
       "clientId": 3,
       "amount": 2000,
-      "status": "paid",
+      "status": "overdue",
       "dueDate": "2025-03-10"
+    },
+    {
+      "id": "6e13",
+      "client": "Jane Smith",
+      "project": "wdadawdaaaaaaaaaaaaaaaaaaaa",
+      "amount": "3333",
+      "date": "2025-03-26",
+      "status": "unpaid"
     }
   ],
   "payments": [

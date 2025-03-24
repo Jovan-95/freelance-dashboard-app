@@ -9,6 +9,7 @@ const Register = lazy(() => import("./pages/register.jsx"));
 const Login = lazy(() => import("./pages/login.jsx"));
 const Dashboard = lazy(() => import("./pages/dashboard.jsx"));
 const Projects = lazy(() => import("./pages/projects.jsx"));
+const Invoices = lazy(() => import("./pages/invoices.jsx"));
 
 function App() {
   return (
@@ -32,6 +33,14 @@ function App() {
                 element={
                   <PrivateRoute>
                     <Projects />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/invoices"
+                element={
+                  <PrivateRoute>
+                    <Invoices />
                   </PrivateRoute>
                 }
               />
