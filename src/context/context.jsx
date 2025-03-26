@@ -33,13 +33,18 @@ export const ContextProvider = ({ children }) => {
       }
 
       case "loginUser": {
-        const updatedLoggedInUsers = [...state.loggedInUsers, action.payload];
+        const updatedLoggedInUsers = [action.payload];
         localStorage.setItem(
           "loggedInUsers",
           JSON.stringify(updatedLoggedInUsers)
         );
         return { ...state, loggedInUsers: updatedLoggedInUsers };
       }
+      case "logoutUser": {
+        localStorage.removeItem("loggedInUsers");
+        return { ...state, loggedInUsers: [] };
+      }
+
       default:
         return state;
     }

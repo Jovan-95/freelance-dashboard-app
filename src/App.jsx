@@ -10,6 +10,8 @@ const Login = lazy(() => import("./pages/login.jsx"));
 const Dashboard = lazy(() => import("./pages/dashboard.jsx"));
 const Projects = lazy(() => import("./pages/projects.jsx"));
 const Invoices = lazy(() => import("./pages/invoices.jsx"));
+const Insights = lazy(() => import("./pages/insights.jsx"));
+const Profile = lazy(() => import("./pages/profile.jsx"));
 
 function App() {
   return (
@@ -41,6 +43,22 @@ function App() {
                 element={
                   <PrivateRoute>
                     <Invoices />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/insights"
+                element={
+                  <PrivateRoute>
+                    <Insights />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/profile"
+                element={
+                  <PrivateRoute>
+                    <Profile />
                   </PrivateRoute>
                 }
               />

@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import Navigation from "../components/navigation";
 import HttpContext from "../context/httpContext";
 import Modal from "../components/Modal";
+import { jsPDF } from "jspdf";
 
 function Invoices() {
   const {
@@ -53,14 +54,25 @@ function Invoices() {
   }
 
   // Download invoice
-  const getDownloadLink = (invoiceId) =>
-    `https://example.com/materials/invoice-${invoiceId}.pdf`;
+  // const getDownloadLink = (invoiceId) =>
+  //   `https://example.com/materials/invoice-${invoiceId}.pdf`;
 
-  function handleInvoiceDownloadLink(invoice) {
-    console.log("Download invoice", invoice);
+  // function handleInvoiceDownloadLink(invoice) {
+  //   console.log("Download invoice", invoice);
 
-    const fileUrl = getDownloadLink(invoice.id);
-    window.open(fileUrl, "_blank");
+  //   const fileUrl = getDownloadLink(invoice.id);
+  //   window.open(fileUrl, "_blank");
+  // }
+  function handleInvoiceDownload(invoice) {
+    const doc = new jsPDF();
+    doc.text(`Invoice ID: ${invoice.id}`, 10, 10);
+    doc.text(`Client: ${invoice.client}`, 10, 20);
+    doc.text(`Project: ${invoice.project}`, 10, 30);
+    doc.text(`Amount: ${invoice.amount} $`, 10, 40);
+    doc.text(`Date: ${invoice.date}`, 10, 50);
+    doc.text(`Status: ${invoice.status}`, 10, 60);
+
+    doc.save(`invoice-${invoice.id}.pdf`);
   }
 
   // Edit modal
@@ -101,7 +113,7 @@ function Invoices() {
                 Edit status
               </button>
               <button
-                onClick={() => handleInvoiceDownloadLink(invoice)}
+                onClick={() => handleInvoiceDownload(invoice)}
                 style={{ marginBottom: "16px" }}
               >
                 Download this invoice
