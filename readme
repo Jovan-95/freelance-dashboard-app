@@ -1,0 +1,11 @@
+Project start:
+npm run dev
+
+Backend start:
+npm run server
+
+PDFs:
+npm install jspdf
+
+Charts:
+npm install chart.js react-chartjs-2
