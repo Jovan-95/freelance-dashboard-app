@@ -44,6 +44,27 @@ export const ContextProvider = ({ children }) => {
         localStorage.removeItem("loggedInUsers");
         return { ...state, loggedInUsers: [] };
       }
+      case "editUserProfile": {
+        const updatedUsers = state.users.map((user) =>
+          user.id === action.payload.id ? action.payload : user
+        );
+
+        const updatedLoggedInUsers = state.loggedInUsers.map((user) =>
+          user.id === action.payload.id ? action.payload : user
+        );
+
+        localStorage.setItem("users", JSON.stringify(updatedUsers));
+        localStorage.setItem(
+          "loggedInUsers",
+          JSON.stringify(updatedLoggedInUsers)
+        );
+
+        return {
+          ...state,
+          users: updatedUsers,
+          loggedInUsers: updatedLoggedInUsers,
+        };
+      }
 
       default:
         return state;
