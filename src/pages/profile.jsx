@@ -1,7 +1,8 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Navigation from "../components/navigation";
 import Context from "../context/context";
 import Modal from "../components/Modal";
+import Notification from "../components/notification";
 
 function Profile() {
   const { state, dispatch } = useContext(Context);
@@ -12,7 +13,7 @@ function Profile() {
     password: loggedInUser.password,
     id: loggedInUser.id,
   });
-
+  const [activeNotification, setActiveNotification] = useState(false);
   // console.log("registered users", state.users);
 
   console.log("logged user", loggedInUser);
@@ -25,6 +26,7 @@ function Profile() {
     console.log("edited", editedUserProfile);
     dispatch({ type: "editUserProfile", payload: editedUserProfile });
     setIsOpen((prev) => !prev);
+    setActiveNotification(true);
   }
 
   return (
@@ -72,6 +74,14 @@ function Profile() {
           <button onClick={editUserProfile}>Save changes</button>
         </Modal>
       </div>
+      {activeNotification && (
+        <Notification
+          message="User edited successfully!"
+          type="success"
+          duration={3000}
+          onClose={() => setActiveNotification(false)}
+        />
+      )}
     </div>
   );
 }
