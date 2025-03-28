@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import Navigation from "../components/navigation";
 import { useContext, useEffect, useState } from "react";
 import Context from "../context/context";
+import Notification from "../components/notification";
 
 function Login() {
   const navigate = useNavigate();
@@ -31,6 +32,7 @@ function Login() {
 
     if (user) {
       alert("Credential are matching!");
+
       dispatch({
         type: "loginUser",
         payload: { ...loginObj, isAuthenticated: true, id: user.id },

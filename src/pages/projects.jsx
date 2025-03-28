@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import Navigation from "../components/navigation";
 import Modal from "../components/Modal";
 import HttpContext from "../context/httpContext";
+import Notification from "../components/notification";
 
 function Projects() {
   const {
@@ -15,6 +16,12 @@ function Projects() {
 
   const [createProjectModal, setCreateProjectModal] = useState(false);
   const [editProjectModal, setEditProjectModal] = useState(false);
+
+  // Notifications
+  const [addProjectNotification, setAddProjectNotification] = useState(false);
+  const [removeProjectNotification, setRemoveProjectNotification] =
+    useState(false);
+  const [editProjectNotification, setEditProjectNotification] = useState(false);
 
   // Filter by status
   const [filteredProjects, setFilteredProjects] = useState(state.projects);
@@ -61,12 +68,14 @@ function Projects() {
       budget: "",
     });
     setCreateProjectModal((prev) => !prev);
+    setAddProjectNotification(true);
   }
 
   // Project removing
   function handleProjectRemove(project) {
     console.log("Delete Project", project);
     deleteProject(project.id);
+    setRemoveProjectNotification(true);
   }
 
   // Edit modal open
@@ -80,6 +89,7 @@ function Projects() {
     console.log("Saving!", editedProject);
     setEditProjectModal((prev) => !prev);
     editProject(editedProject);
+    setEditProjectNotification(true);
   }
 
   // Filter project by status
@@ -370,6 +380,30 @@ function Projects() {
           </div>
         </Modal>
       </div>
+      {addProjectNotification && (
+        <Notification
+          message="Project ADDED successfully!"
+          type="success"
+          duration={3000}
+          onClose={() => setAddProjectNotification(false)}
+        />
+      )}
+      {removeProjectNotification && (
+        <Notification
+          message="Project REMOVED successfully!"
+          type="error"
+          duration={3000}
+          onClose={() => setRemoveProjectNotification(false)}
+        />
+      )}
+      {editProjectNotification && (
+        <Notification
+          message="Project EDITED successfully!"
+          type="success"
+          duration={3000}
+          onClose={() => setEditProjectNotification(false)}
+        />
+      )}
     </div>
   );
 }

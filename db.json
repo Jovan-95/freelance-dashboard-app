@@ -25,19 +25,64 @@
       "company": "CZV",
       "phone": 1111111,
       "notes": "Pointguard"
+    },
+    {
+      "id": 1743159264309,
+      "name": "",
+      "email": "",
+      "company": "",
+      "phone": "",
+      "notes": ""
+    },
+    {
+      "id": 1743159359029,
+      "name": "",
+      "email": "",
+      "company": "",
+      "phone": "",
+      "notes": ""
+    },
+    {
+      "id": 1743159380061,
+      "name": "",
+      "email": "",
+      "company": "",
+      "phone": "",
+      "notes": ""
+    },
+    {
+      "id": 1743159401533,
+      "name": "",
+      "email": "",
+      "company": ""
+    },
+    {
+      "id": 1743159528741,
+      "name": "",
+      "email": "",
+      "company": "",
+      "phone": "",
+      "notes": ""
+    },
+    {
+      "id": 1743159555373,
+      "name": "",
+      "email": "",
+      "company": "",
+      "phone": "",
+      "notes": ""
+    },
+    {
+      "id": 1743159559621,
+      "name": "",
+      "email": "",
+      "company": ""
     }
   ],
   "projects": [
     {
-      "id": "1",
-      "name": "Website Development",
-      "clientId": 1,
-      "status": "active",
-      "budget": 5000
-    },
-    {
       "id": "738c",
-      "name": "wdadawdaaaaaaaaaaaaaaaaaaaa",
+      "name": "wdadawdaaaaaaaaaaa",
       "description": "awdaw",
       "client": "Alice Johnson",
       "startDate": "2025-03-24",
@@ -54,16 +99,6 @@
       "deadline": "2025-03-30",
       "status": "completed",
       "budget": 22
-    },
-    {
-      "id": "b2c0",
-      "name": "awdawd",
-      "description": "adawd",
-      "client": "Alice Johnson",
-      "startDate": "2025-03-29",
-      "deadline": "2025-03-30",
-      "status": "pending",
-      "budget": 213123
     }
   ],
   "invoices": [
@@ -92,12 +127,20 @@
       "status": "paid"
     },
     {
-      "id": "345e",
-      "client": "Jane Smith",
-      "project": "awdawd",
-      "amount": "222",
-      "date": "2025-03-19",
-      "status": "paid"
+      "id": "366b",
+      "client": "",
+      "project": "",
+      "amount": "",
+      "date": "",
+      "status": ""
+    },
+    {
+      "id": "8dd4",
+      "client": "",
+      "project": "",
+      "amount": "",
+      "date": "",
+      "status": ""
     }
   ],
   "payments": [

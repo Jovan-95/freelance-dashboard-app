@@ -3,6 +3,7 @@ import Navigation from "../components/navigation";
 import HttpContext from "../context/httpContext";
 import Modal from "../components/Modal";
 import { jsPDF } from "jspdf";
+import Notification from "../components/notification";
 
 function Invoices() {
   const {
@@ -30,6 +31,12 @@ function Invoices() {
     status: "",
   });
 
+  // Notifications
+  const [addInvoiceNotification, setInvoiceNotification] = useState(false);
+  const [editInvoiceNotification, setEditInvoiceNotification] = useState(false);
+  const [removeInvoiceNotification, setRemoveInvoiceNotification] =
+    useState(false);
+
   useEffect(function () {
     getInvoices();
     getClients();
@@ -45,24 +52,16 @@ function Invoices() {
     // console.log("new invoice", invoiceObj);
     addInvoice(invoiceObj);
     setCreateInvoiceModal((prev) => !prev);
+    setInvoiceNotification(true);
   }
 
   // Delete invoice
   function handleInvoiceRemove(invoice) {
     // console.log("delete invoice", invoice);
     deleteInvoice(invoice.id);
+    setRemoveInvoiceNotification(true);
   }
 
-  // Download invoice
-  // const getDownloadLink = (invoiceId) =>
-  //   `https://example.com/materials/invoice-${invoiceId}.pdf`;
-
-  // function handleInvoiceDownloadLink(invoice) {
-  //   console.log("Download invoice", invoice);
-
-  //   const fileUrl = getDownloadLink(invoice.id);
-  //   window.open(fileUrl, "_blank");
-  // }
   function handleInvoiceDownload(invoice) {
     const doc = new jsPDF();
     doc.text(`Invoice ID: ${invoice.id}`, 10, 10);
@@ -85,6 +84,7 @@ function Invoices() {
   function handleEditStatusInvoiceSave() {
     editInvoice(editedInvoice);
     setEditInvoiceModal((prev) => !prev);
+    setEditInvoiceNotification(true);
   }
 
   return (
@@ -237,6 +237,30 @@ function Invoices() {
           </div>
         </Modal>
       </div>
+      {addInvoiceNotification && (
+        <Notification
+          message="Invoice ADDED successfully!"
+          type="success"
+          duration={3000}
+          onClose={() => setInvoiceNotification(false)}
+        />
+      )}
+      {editInvoiceNotification && (
+        <Notification
+          message="Invoice EDITED successfully!"
+          type="success"
+          duration={3000}
+          onClose={() => setEditInvoiceNotification(false)}
+        />
+      )}
+      {removeInvoiceNotification && (
+        <Notification
+          message="Invoice EDITED successfully!"
+          type="error"
+          duration={3000}
+          onClose={() => setRemoveInvoiceNotification(false)}
+        />
+      )}
     </div>
   );
 }

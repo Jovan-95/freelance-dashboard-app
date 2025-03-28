@@ -2,10 +2,13 @@ import { useContext, useEffect, useState } from "react";
 import Navigation from "../components/navigation";
 import HttpContext from "../context/httpContext";
 import Modal from "../components/Modal";
+import Notification from "../components/notification";
 
 function Dashboard() {
   const [openAddClientModal, setIsAddClientModal] = useState(false);
   const [openEditClientModal, setIsOpenEditClientModal] = useState(false);
+  const [activeNotification, setActiveNotification] = useState(false);
+  const [editNotification, setEditNotification] = useState(false);
 
   // Search
   const [searchTerm, setSearchTerm] = useState("");
@@ -86,6 +89,7 @@ function Dashboard() {
     addClient({ ...newClientObj, id: Date.now() });
     setNewClientObj({ name: "", email: "", company: "" });
     setIsAddClientModal(false); // Close modal after adding
+    setActiveNotification(true);
   }
 
   // Edit client modal open
@@ -107,6 +111,7 @@ function Dashboard() {
       return prevState;
     });
     setIsOpenEditClientModal(false);
+    setEditNotification(true);
   }
 
   // Filter existing clients by search name
@@ -351,6 +356,22 @@ function Dashboard() {
           </div>
         </div>
       </div>
+      {activeNotification && (
+        <Notification
+          message="Client ADDED successfully!"
+          type="success"
+          duration={3000}
+          onClose={() => setActiveNotification(false)}
+        />
+      )}
+      {editNotification && (
+        <Notification
+          message="Client EDITED successfully!"
+          type="success"
+          duration={3000}
+          onClose={() => setEditNotification(false)}
+        />
+      )}
     </div>
   );
 }
